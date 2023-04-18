@@ -49,7 +49,7 @@ TEST_CASE("checking correctness with third constructor involved "){
     Fraction f(4,5);
     Fraction r(4,5);
     Fraction a =f*r;
-    CHECK(f>a);
+    CHECK(f.getDown()<a.getDown());
     a=f/r;
-    CHECK(a==1);
+    CHECK(a.getUp()==1);
 };

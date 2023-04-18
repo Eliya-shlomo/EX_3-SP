@@ -6,31 +6,33 @@
 namespace ariel{}
 #include <string>
 using namespace std;
+    int gcd(int a,int b);
 
     class Fraction {
     private:
-        int a;
-        int b;
+        int up;
+        int down;
 
 
     public:
 
-        int gcd(int abc, int bcd);
-
+        int gcd(int a,int b);
         int getUp();
 
         int getDown();
 
-        Fraction(int abc, int bcd);
+        Fraction(int up, int down);
 
         Fraction();
 
+        Fraction(float number);
 
-        Fraction operator+(const Fraction &) const;
 
-        Fraction operator+(float) const;
+        Fraction operator+(const Fraction &other) const;
 
-        friend Fraction operator+( float, const Fraction &);
+        Fraction operator+(float other) const;
+
+        friend Fraction operator+( float fother, const Fraction &otehr);
 
 
         Fraction operator-(const Fraction &) const;
@@ -93,7 +95,7 @@ using namespace std;
 
         friend std::ostream &operator<<(std::ostream &output, const Fraction &other);
 
-
+        Fraction simpler(Fraction f)const;
     };
 
 

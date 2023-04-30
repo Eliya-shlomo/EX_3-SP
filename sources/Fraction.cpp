@@ -6,15 +6,8 @@
 #include <ostream>
 using namespace std;
 
-Fraction simpler(Fraction f){
-    int GCD=gcd(f.getUp(),f.getDown());
-    int new_up=f.getUp()/GCD;
-    int new_down=f.getUp()/GCD;
-    Fraction temp(new_up,new_down);
-    return temp;
-}
 
-int Fraction::gcd(int a,int b) {
+int Fraction:: gcd(int a,int b) {
     int result = min(a, b); // Find Minimum of a and b
     while (result > 0) {
         if (a % result == 0 && b % result == 0) {
@@ -25,12 +18,20 @@ int Fraction::gcd(int a,int b) {
     return result; // return gcd of a and b
 };
 
+    void Fraction:: reduce(){
+    int GCD=gcd(this->getNumerator(),this->getDenominator());
+    this->up=this->getNumerator()/GCD;
+    this->down=this->getNumerator()/GCD;
 
-int Fraction::getUp() {
+}
+
+
+
+ int Fraction::getNumerator()const {
     return this->up;
 };
 
-int Fraction::getDown() {
+ int Fraction::getDenominator()const {
     return this->down;
 };
 
@@ -66,17 +67,18 @@ Fraction::Fraction(float number) {
 
 
 
-Fraction Fraction::operator+(const Fraction &other) const {
+const Fraction Fraction::operator+(const Fraction& other) const{
     if(this->down==0||other.down==0){
         throw invalid_argument("Denominator cannot be zero");
     }
     int up_=this->up*other.down+this->down*other.up;
     int down_=this->down*other.down;
     Fraction temp(up_,down_);
-    return simpler(temp);
+    temp.reduce();
+    return temp;
 };
 
-Fraction Fraction::operator+(const float other) const {
+const Fraction Fraction::operator+(const float other) const {
     if(this->down==0||other==0){
         throw invalid_argument("Denominator cannot be zero");
     }
@@ -84,11 +86,12 @@ Fraction Fraction::operator+(const float other) const {
     int up_=this->up*o.down+this->down*o.up;
     int down_=this->down*o.down;
     Fraction temp(up_,down_);
-    return simpler(temp);
+    temp.reduce();
+    return temp;
 };
 
 
- Fraction operator+(const float fother, const Fraction &other){
+ const Fraction operator+(const float fother, const Fraction &other){
      return other.operator+(fother);
 };
 
@@ -98,23 +101,25 @@ Fraction Fraction::operator+(const float other) const {
 
 
 
-Fraction Fraction::operator-(const Fraction &other) const {
+const Fraction Fraction::operator-(const Fraction &other) const {
     if(this->down==0||other.down==0){
         throw invalid_argument("Denominator cannot be zero");
     }
     int up_=this->up*other.down-this->down*other.up;
     int down_=this->down*other.down;
     Fraction temp(up_,down_);
-    return simpler(temp);
+    temp.reduce();
+    return temp;
 };
-Fraction Fraction::operator-(const float fother) const {
+const Fraction Fraction::operator-(const float fother) const {
     Fraction o(fother);
     int up_=this->up*o.down-this->down*o.up;
     int down_=this->down*o.down;
     Fraction temp(up_,down_);
-    return simpler(temp);
+    temp.reduce();
+    return temp;
 };
-Fraction operator-(const float fother, const Fraction &otehr){
+const Fraction operator-(const float fother, const Fraction &otehr){
     return otehr.operator-(fother);
 };
 
@@ -124,24 +129,27 @@ Fraction operator-(const float fother, const Fraction &otehr){
 
 
 
-Fraction Fraction::operator/(const Fraction &other) const {
+const Fraction Fraction::operator/(const Fraction &other) const {
     if(this->down==0||other.down==0){
         throw invalid_argument("Denominator cannot be zero");
     }
     int up_=this->up*other.down;
     int down_=this->down*other.up;
     Fraction temp(up_,down_);
-    return simpler(temp);
+    temp.reduce();
+    return temp;
 };
 
-Fraction Fraction::operator/(const float fother) const {
+const Fraction Fraction::operator/(const float fother) const {
     Fraction o(fother);
     int up_=this->up*o.down;
     int down_=this->down*o.up;
     Fraction temp(up_,down_);
-    return simpler(temp);};
+    temp.reduce();
+    return temp;
+};
 
-Fraction operator/(const float fotehr, const Fraction &other){
+const Fraction operator/(const float fotehr, const Fraction &other){
     return other.operator/(fotehr);
 };
 
@@ -153,17 +161,18 @@ Fraction operator/(const float fotehr, const Fraction &other){
 
 
 
-Fraction Fraction::operator*(const Fraction &other) const {
+const Fraction Fraction::operator*(const Fraction &other) const {
     if(this->down==0||other.down==0){
         throw invalid_argument("Denominator cannot be zero");
     }
     int up_=this->up*other.up;
     int down_=this->down*other.down;
     Fraction temp(up_,down_);
-    return simpler(temp);
+    temp.reduce();
+    return temp;
 };
 
-Fraction Fraction::operator*(const float fother) const {
+const Fraction Fraction::operator*(const float fother) const {
     Fraction o(fother);
     if(this->down==0||o.down==0){
         throw invalid_argument("Denominator cannot be zero");
@@ -171,10 +180,11 @@ Fraction Fraction::operator*(const float fother) const {
     int up_=this->up*o.up;
     int down_=this->down*o.down;
     Fraction temp(up_,down_);
-    return simpler(temp);
+    temp.reduce();
+    return temp;
 };
 
-Fraction operator*(const float fotehr, const Fraction &other){
+const Fraction operator*(const float fotehr, const Fraction &other){
     return other.operator*(fotehr);
 };
 
@@ -187,8 +197,8 @@ Fraction operator*(const float fotehr, const Fraction &other){
 bool Fraction::operator==(const Fraction &other) const {
     Fraction temp_1;
     Fraction temp_2;
-    temp_1.up=this->up,temp_1.down=this->down, temp_1=simpler(temp_1);
-    temp_2.up=other.up,temp_2.down=other.down, temp_2=simpler(temp_2);
+    temp_1.up=this->up,temp_1.down=this->down, temp_1.reduce();
+    temp_2.up=other.up,temp_2.down=other.down, temp_2.reduce();
     if(temp_1.down==0||temp_2.down==0){
         throw invalid_argument("Denominator cannot be zero");
     } else if(temp_1.up==temp_2.up&&temp_1.down==temp_2.down){
@@ -202,8 +212,8 @@ bool Fraction::operator==(float fother) const {
     Fraction o(fother);
     Fraction temp_1;
     Fraction temp_2;
-    temp_1.up=this->up,temp_1.down=this->down, temp_1=simpler(temp_1);
-    temp_2.up=o.up,temp_2.down=o.down, temp_2=simpler(temp_2);
+    temp_1.up=this->up,temp_1.down=this->down, temp_1.reduce();
+    temp_2.up=o.up,temp_2.down=o.down, temp_2.reduce();
     if(temp_1.down==0||temp_2.down==0){
         throw invalid_argument("Denominator cannot be zero");
     } else if(temp_1.up==temp_2.up&&temp_1.down==temp_2.down){
@@ -222,8 +232,8 @@ bool operator==(float fother, const Fraction &other){
 bool Fraction::operator>(const Fraction &other) const {
     Fraction temp_1;
     Fraction temp_2;
-    temp_1.up=this->up,temp_1.down=this->down, temp_1=simpler(temp_1);
-    temp_2.up=other.up,temp_2.down=other.down, temp_2=simpler(temp_2);
+    temp_1.up=this->up,temp_1.down=this->down, temp_1.reduce();
+    temp_2.up=other.up,temp_2.down=other.down, temp_2.reduce();
     temp_1.up=temp_1.up*temp_2.down;
     temp_2.up=temp_2.up*temp_1.down;
     if(temp_1.down==0||temp_2.down==0){
@@ -239,8 +249,8 @@ bool Fraction::operator>(float fother) const {
     Fraction o(fother);
     Fraction temp_1;
     Fraction temp_2;
-    temp_1.up=this->up,temp_1.down=this->down, temp_1=simpler(temp_1);
-    temp_2.up=o.up,temp_2.down=o.down, temp_2=simpler(temp_2);
+    temp_1.up=this->up,temp_1.down=this->down, temp_1.reduce();
+    temp_2.up=o.up,temp_2.down=o.down, temp_2.reduce();
     temp_1.up=temp_1.up*temp_2.down;
     temp_2.up=temp_2.up*temp_1.down;
     if(temp_1.down==0||temp_2.down==0){
@@ -263,8 +273,8 @@ bool operator>(float fother, const Fraction &other){
 bool Fraction::operator<(const Fraction &other) const {
     Fraction temp_1;
     Fraction temp_2;
-    temp_1.up=this->up,temp_1.down=this->down, temp_1=simpler(temp_1);
-    temp_2.up=other.up,temp_2.down=other.down, temp_2=simpler(temp_2);
+    temp_1.up=this->up,temp_1.down=this->down, temp_1.reduce();
+    temp_2.up=other.up,temp_2.down=other.down, temp_2.reduce();
     temp_1.up=temp_1.up*temp_2.down;
     temp_2.up=temp_2.up*temp_1.down;
     if(temp_1.down==0||temp_2.down==0){
@@ -280,8 +290,8 @@ bool Fraction::operator<(float fother) const {
     Fraction o(fother);
     Fraction temp_1;
     Fraction temp_2;
-    temp_1.up=this->up,temp_1.down=this->down, temp_1=simpler(temp_1);
-    temp_2.up=o.up,temp_2.down=o.down, temp_2=simpler(temp_2);
+    temp_1.up=this->up,temp_1.down=this->down, temp_1.reduce();
+    temp_2.up=o.up,temp_2.down=o.down, temp_2.reduce();
     temp_1.up=temp_1.up*temp_2.down;
     temp_2.up=temp_2.up*temp_1.down;
     if(temp_1.down==0||temp_2.down==0){
@@ -306,8 +316,8 @@ bool operator<(float fother, const Fraction &other){
 bool Fraction::operator>=(const Fraction &other) const {
     Fraction temp_1;
     Fraction temp_2;
-    temp_1.up=this->up,temp_1.down=this->down, temp_1=simpler(temp_1);
-    temp_2.up=other.up,temp_2.down=other.down, temp_2=simpler(temp_2);
+    temp_1.up=this->up,temp_1.down=this->down, temp_1.reduce();
+    temp_2.up=other.up,temp_2.down=other.down, temp_2.reduce();
     temp_1.up=temp_1.up*temp_2.down;
     temp_2.up=temp_2.up*temp_1.down;
     if(temp_1.down==0||temp_2.down==0){
@@ -323,8 +333,8 @@ bool Fraction::operator>=(float fother) const {
     Fraction o(fother);
     Fraction temp_1;
     Fraction temp_2;
-    temp_1.up=this->up,temp_1.down=this->down, temp_1=simpler(temp_1);
-    temp_2.up=o.up,temp_2.down=o.down, temp_2=simpler(temp_2);
+    temp_1.up=this->up,temp_1.down=this->down, temp_1.reduce();
+    temp_2.up=o.up,temp_2.down=o.down, temp_2.reduce();
     temp_1.up=temp_1.up*temp_2.down;
     temp_2.up=temp_2.up*temp_1.down;
     if(temp_1.down==0||temp_2.down==0){
@@ -349,8 +359,8 @@ bool operator>=(float fother, const Fraction &other){
 bool Fraction::operator<=(const Fraction &other) const {
     Fraction temp_1;
     Fraction temp_2;
-    temp_1.up=this->up,temp_1.down=this->down, temp_1=simpler(temp_1);
-    temp_2.up=other.up,temp_2.down=other.down, temp_2=simpler(temp_2);
+    temp_1.up=this->up,temp_1.down=this->down, temp_1.reduce();
+    temp_2.up=other.up,temp_2.down=other.down, temp_2.reduce();
     temp_1.up=temp_1.up*temp_2.down;
     temp_2.up=temp_2.up*temp_1.down;
     if(temp_1.down==0||temp_2.down==0){
@@ -366,8 +376,8 @@ bool Fraction::operator<=(float fother) const {
     Fraction o(fother);
     Fraction temp_1;
     Fraction temp_2;
-    temp_1.up=this->up,temp_1.down=this->down, temp_1=simpler(temp_1);
-    temp_2.up=o.up,temp_2.down=o.down, temp_2=simpler(temp_2);
+    temp_1.up=this->up,temp_1.down=this->down, temp_1.reduce();
+    temp_2.up=o.up,temp_2.down=o.down, temp_2.reduce();
     temp_1.up=temp_1.up*temp_2.down;
     temp_2.up=temp_2.up*temp_1.down;
     if(temp_1.down==0||temp_2.down==0){
@@ -386,27 +396,56 @@ bool operator<=(float fother, const Fraction &other){
 
 
 
-Fraction Fraction::operator++() {
+Fraction & Fraction::operator++() {
     int plus=this->down;
     this->up=this->up+plus;
+    return *this;
 };
+Fraction Fraction::operator++(int)
+{
+    this->up += this->down;
+    Fraction fr = (*this);
+    fr.reduce();
+    return fr;
+}
 
-Fraction Fraction::operator--() {
+Fraction & Fraction::operator--() {
     int minus=this->down;
-    if(this->up-minus<0){
-        this->up=(minus-this->up)*-1;
-    }
-    else if(this->up-minus>=0) {
-        this->up = this->up-minus;
-    }
+    this->up=this->up-minus;
+    this->reduce();
+    return *this;
 };
+Fraction Fraction::operator--(int)
+{
+    this->up -= this->down;
+    Fraction fr = (*this);
+    fr.reduce();
+    return fr;
+}
 
 
 
-std::ostream &operator<<(std::ostream &output, Fraction other) {
-    output << other.getUp() << "/" << other.getDown();
+ostream& operator<<(ostream& output, const Fraction& other){
+    Fraction temp(other.getNumerator(), other.getDenominator());
+    temp.reduce();
+    output << temp.getNumerator() << "/" << temp.getDenominator();
     return output;
 };
+
+istream& operator >>(istream& in,  Fraction& frac){
+    int fracdnum;
+    int fracnum;
+    int num_read = scanf("%d/%d", &fracnum, &fracdnum);
+    if( num_read ==1){
+        fracdnum=1;
+        Fraction(fracnum,fracdnum);
+    }
+    else if (num_read == 2){
+        Fraction(fracnum,fracdnum);
+    }
+
+    return in;
+}
 
 
 

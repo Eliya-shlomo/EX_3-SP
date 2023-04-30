@@ -6,60 +6,65 @@
 namespace ariel{}
 #include <string>
 using namespace std;
-    int gcd(int a,int b);
+
+
 
     class Fraction {
     private:
+
         int up;
         int down;
+        int gcd(int, int);
 
+    protected:
+        void reduce();
 
     public:
 
-        int gcd(int a,int b);
-        int getUp();
 
-        int getDown();
+        int getNumerator()const;
 
-        Fraction(int up, int down);
+        int getDenominator()const;
+
+        Fraction(int up_, int down);
 
         Fraction();
 
         Fraction(float number);
 
 
-        Fraction operator+(const Fraction &other) const;
+        const Fraction operator+(const Fraction &other) const;
 
-        Fraction operator+(float other) const;
+        const Fraction operator+(float other) const;
 
-        friend Fraction operator+( float fother, const Fraction &otehr);
-
-
-        Fraction operator-(const Fraction &) const;
-
-        Fraction operator-( float) const;
-
-        friend Fraction operator-( float, const Fraction &);
+        friend const Fraction operator+( float fother, const Fraction &otehr);
 
 
-        Fraction operator/(const Fraction &) const;
+        const Fraction operator-(const Fraction &) const;
 
-        Fraction operator/( float) const;
+        const Fraction operator-( float) const;
 
-        friend Fraction operator/( float, const Fraction &);
+        friend const Fraction operator-( float, const Fraction &);
 
 
-        Fraction operator*(const Fraction &) const;
+        const Fraction operator/(const Fraction &) const;
 
-        Fraction operator*( float) const;
+        const Fraction operator/( float) const;
 
-        friend Fraction operator*( float, const Fraction &);
+        friend const Fraction operator/( float, const Fraction &);
+
+
+        const Fraction operator*(const Fraction &) const;
+
+        const Fraction operator*( float) const;
+
+        friend const Fraction operator*( float, const Fraction &);
 
         bool operator==(const Fraction &) const;
 
         bool operator==(float) const;
 
-        friend bool operator==(float, const Fraction &);
+        friend  bool operator==(float, const Fraction &);
 
         bool operator>(const Fraction &) const;
 
@@ -85,17 +90,21 @@ using namespace std;
 
         friend bool operator<=(float, const Fraction &);
 
+
+
+        Fraction & operator++();
         Fraction operator++(int);
 
+        Fraction & operator--();
         Fraction operator--(int);
 
-        Fraction operator++();
-
-        Fraction operator--();
 
         friend std::ostream &operator<<(std::ostream &output, const Fraction &other);
 
-        Fraction simpler(Fraction f)const;
+        friend istream& operator >>(istream& in_,  Fraction& frac);
+
+
+
     };
 
 

@@ -3,4 +3,4 @@ project(EX_3)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(EX_3 main.cpp sources/Fraction Demo.cpp doctest.h grade grade_utils Makefile TestCounter.cpp Demo.cpp sources/Fraction.cpp sources/Fraction.hpp Test.cpp Test.hpp main.cpp)
+add_executable(EX_3 main.cpp sources/Fraction sources/Fraction.cpp sources/Fraction.hpp StudentTest1.cpp StudentTest1.cpp StudentTest1.cpp)

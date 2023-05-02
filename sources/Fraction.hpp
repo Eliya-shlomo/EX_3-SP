@@ -16,6 +16,7 @@ using namespace std;
         int down;
         int gcd(int, int);
 
+
     protected:
         void reduce();
 
@@ -32,6 +33,8 @@ using namespace std;
 
         Fraction(float number);
 
+        Fraction(const Fraction *fraction);
+
 
         const Fraction operator+(const Fraction &other) const;
 
@@ -44,7 +47,7 @@ using namespace std;
 
         const Fraction operator-( float) const;
 
-        friend const Fraction operator-( float, const Fraction &);
+        friend Fraction operator-( float ,const Fraction&);
 
 
         const Fraction operator/(const Fraction &) const;
@@ -60,11 +63,20 @@ using namespace std;
 
         friend const Fraction operator*( float, const Fraction &);
 
+
         bool operator==(const Fraction &) const;
 
         bool operator==(float) const;
 
         friend  bool operator==(float, const Fraction &);
+
+
+        bool operator!=(const Fraction& other) const;
+
+        bool operator!=(const float& other) const;
+
+        friend bool operator!=(const float& num, const Fraction& other);
+
 
         bool operator>(const Fraction &) const;
 
@@ -102,6 +114,9 @@ using namespace std;
         friend std::ostream &operator<<(std::ostream &output, const Fraction &other);
 
         friend istream& operator >>(istream& in_,  Fraction& frac);
+
+        bool does_overflow(int abc, int bcd) const;
+
 
 
 

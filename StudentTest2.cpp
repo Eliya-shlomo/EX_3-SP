@@ -10,9 +10,8 @@ using namespace ariel;
 TEST_SUITE("Fraction constructors tests") {
 
     TEST_CASE("Parameterized constructor with zero numerator") {
-        CHECK_NOTHROW(Fraction frac{0, 4});
-        CHECK_NOTHROW(Fraction frac{0, -4});
-
+        CHECK_NOTHROW(Fraction frac{0,4});
+        CHECK_NOTHROW(Fraction frac{0,-4});
     }
 
     TEST_CASE("Parameterized constructor with zero denominator") {
@@ -50,8 +49,8 @@ TEST_SUITE("Overloaded == operator tests") {
         Fraction frac1(11, 13);
         Fraction frac2(11, 15);
         Fraction frac3(12, 13);
-        CHECK_NE(frac1, frac2);
-        CHECK_NE(frac1, frac3);
+        CHECK_NE(frac1,frac2);
+        CHECK_NE(frac1,frac3);
     }
 
     TEST_CASE("Reduced form equality") {

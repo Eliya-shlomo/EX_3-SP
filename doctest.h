@@ -39,6 +39,8 @@
 // =================================================================================================
 // =================================================================================================
 
+#include "sources/Fraction.hpp"
+
 #ifndef DOCTEST_LIBRARY_INCLUDED
 #define DOCTEST_LIBRARY_INCLUDED
 
@@ -665,7 +667,7 @@ friend DOCTEST_INTERFACE std::ostream& operator<<(std::ostream& s, const String&
 DOCTEST_INTERFACE String operator+(const String& lhs, const String& rhs);
 
 DOCTEST_INTERFACE bool operator==(const String& lhs, const String& rhs);
-DOCTEST_INTERFACE bool operator!=(const String& lhs, const String& rhs);
+DOCTEST_INTERFACE bool operator!=(Fraction lhs, const String& rhs);
 DOCTEST_INTERFACE bool operator<(const String& lhs, const String& rhs);
 DOCTEST_INTERFACE bool operator>(const String& lhs, const String& rhs);
 DOCTEST_INTERFACE bool operator<=(const String& lhs, const String& rhs);
